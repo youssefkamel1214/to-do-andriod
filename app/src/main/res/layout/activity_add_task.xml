@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTask">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:id="@+id/backbutton"
+        android:minWidth="32dp"
+        android:minHeight="32dp"
+        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+        tools:ignore="SpeakableTextPresentCheck"></ImageButton>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title2"
+        android:layout_marginTop="15dp"
+        android:text="ADD Task"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/titlegroup"
+    android:paddingHorizontal="8dp"
+    android:layout_below="@id/title2">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textStyle="bold"
+        android:textSize="20dp"></TextView>
+
+    <EditText
+        android:id="@+id/title_text"
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/inputdpblack"
+        android:hint="enter ur title"
+        android:inputType="text"
+        android:minWidth="32dp"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck"></EditText>
+</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_group"
+        android:paddingHorizontal="8dp"
+        android:layout_below="@id/titlegroup">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"
+            android:textStyle="bold"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/Note_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:padding="4dp"
+            android:inputType="text"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/inputdpblack"
+            android:hint="enter ur note"
+            android:minWidth="32dp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck"></EditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Date_group"
+        android:paddingHorizontal="8dp"
+        android:layout_below="@id/note_group">
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textStyle="bold"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/Date_text"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/inputdpblack"
+            android:drawableRight="@drawable/ic_baseline_date_range_24"
+            android:editable="false"
+            android:enabled="true"
+            android:inputType="none"
+            android:minWidth="32dp"
+            android:padding="4dp"
+            android:text="20151544545"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck"></EditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/starttime_group"
+        android:paddingHorizontal="8dp"
+        android:layout_below="@id/Date_group">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:textStyle="bold"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/starttime"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:padding="4dp"
+            android:drawableRight="@drawable/ic_baseline_access_time_24"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/inputdpblack"
+            android:inputType="none"
+            android:minWidth="32dp"
+            android:editable="false"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck"></EditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/endtime_group"
+        android:paddingHorizontal="8dp"
+        android:layout_below="@id/starttime_group">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            android:textStyle="bold"
+            android:textSize="20dp"></TextView>
+
+        <EditText
+            android:id="@+id/endtime"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:editable="false"
+            android:layout_marginTop="25dp"
+            android:drawableRight="@drawable/ic_baseline_access_time_24"
+            android:background="@drawable/inputdpblack"
+            android:minWidth="32dp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck"></EditText>
+    </RelativeLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@+id/endtime_group"
+        android:layout_height="wrap_content"
+        android:hint="repeat type"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/repeat_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></AutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="65dp"
+        android:layout_below="@+id/endtime_group"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="wrap_content"
+        android:hint="remind time early"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/remind_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></AutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="130dp"
+        android:layout_below="@+id/endtime_group"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="wrap_content"
+        android:hint="choose color"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/color_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"></AutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/Creattaskbutton"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/endtime_group"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/inputdpblack"
+        android:layout_centerHorizontal="true"
+        android:text="Create task"></Button>
+</RelativeLayout>
