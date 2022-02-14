@@ -56,12 +56,13 @@ private    DataBaseHelper dataBaseHelper;
                 move_add_task_page();
             }
         });
-
-      inaizle_imagebutton();
+        inaizle_imagebutton();
         inalize_datetimeadapter();
         inialize_Databaseandrecycler();
         filterdates_give_adptares();
     }
+
+
 
     private void inaizle_imagebutton() {
         imageButton= binding.appbaar.themeButton;
@@ -104,20 +105,31 @@ private    DataBaseHelper dataBaseHelper;
         binding.Loading.setText("Loading...");
         binding.Loading.setVisibility(View.VISIBLE);
         binding.Taskrecler.setVisibility(View.GONE);
+        selcted_date.set(Calendar.MINUTE,0);
+        selcted_date.set(Calendar.HOUR,0);
+        selcted_date.set(Calendar.SECOND,0);
+        selcted_date.set(Calendar.MILLISECOND,0);
         for (Task task:tasks) {
+            Calendar tmp=task.getStartTime();
+            tmp.set(Calendar.MINUTE,0);
+            tmp.set(Calendar.HOUR,0);
+            tmp.set(Calendar.SECOND,0);
+            tmp.set(Calendar.MILLISECOND,0);
+            if(selcted_date.before(tmp))
+                continue;
             if(task.getRepeat().equals("Daily"))
             {
                 filterd.add(task);
             }
             else if(task.getRepeat().equals("Weekly") &&
                     (selcted_date.get(Calendar.DAY_OF_WEEK)==
-                    task.getStartTime().get(Calendar.DAY_OF_WEEK)))
+                   tmp.get(Calendar.DAY_OF_WEEK)))
             {
                 filterd.add(task);
             }
             else if(task.getRepeat().equals("Mounthly")&&
                     (selcted_date.get(Calendar.DAY_OF_MONTH)==
-                     task.getStartTime().get(Calendar.DAY_OF_MONTH)))
+                     tmp.get(Calendar.DAY_OF_MONTH)))
             {
                 filterd.add(task);
             }
@@ -148,7 +160,7 @@ private    DataBaseHelper dataBaseHelper;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
+        if (resultCode == RESULT_OK) {
             inialize_Databaseandrecycler();
             filterdates_give_adptares();
         }
@@ -219,6 +231,7 @@ private    DataBaseHelper dataBaseHelper;
             @Override
             public void onClick(View view) {
                 dataBaseHelper.Delete_task(task);
+                cancelnotifction(task);
                 inialize_Databaseandrecycler();
                 filterdates_give_adptares();
                 bottomSheetDialog.cancel();
@@ -230,6 +243,7 @@ private    DataBaseHelper dataBaseHelper;
             completetask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    cancelnotifction(task);
                     dataBaseHelper.Update_task(task);
                     inialize_Databaseandrecycler();
                     filterdates_give_adptares();
@@ -238,5 +252,19 @@ private    DataBaseHelper dataBaseHelper;
             });
         }
         bottomSheetDialog.show();
+    }
+
+    private void cancelnotifction(Task task) {
+        Intent intent=new Intent(this, AlarmReciver.class);
+        intent.putExtra("id",task.getId());
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(this
+                ,task.getId(),intent,PendingIntent.FLAG_NO_CREATE);
+
+        if(alarmManager==null)
+        {
+            alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+        if(pendingIntent!=null)
+        alarmManager.cancel(pendingIntent);
     }
 }
