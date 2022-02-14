@@ -2,11 +2,18 @@ package com.example.todoand;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.todoand.controllers.AlarmReciver;
 import com.example.todoand.controllers.DataBaseHelper;
 import com.example.todoand.moduls.Task;
 
@@ -102,7 +110,18 @@ public class AddTask extends AppCompatActivity {
         else
             end_time.set(Calendar.MINUTE,end_time.get(Calendar.MINUTE)+15);
     }
-
+    private void createnotifiction() {
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.O)
+        {
+            String name="todoanriodnotifcition";
+            String des="channel for Alarm manger";
+            int importance= NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel=new NotificationChannel("todo",name,importance);
+            notificationChannel.setDescription(des);
+            NotificationManager notificationManager=getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+    }
     private void create_task() {
         String tittxt=title.getText().toString(),notetxt=note.getText().toString();
         if(tittxt.isEmpty()==true||notetxt.isEmpty()==true||color==-1||selct_rep==-1||slect_rem==-1) {
@@ -128,6 +147,9 @@ public class AddTask extends AppCompatActivity {
                     repeat_items[selct_rep],start_time,end_time,0);
            long i= dataBaseHelper.addOne(task);
            if(i!=-1){
+               task.setId((int)i);
+               createnotifiction();
+               setAlarm((int)i);
                setResult(RESULT_OK);
                finish();
            }
@@ -141,6 +163,27 @@ public class AddTask extends AppCompatActivity {
             a.show();
             System.out.println(e);
         }
+
+    }
+
+    private void setAlarm(int id) {
+        AlarmManager alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(this, AlarmReciver.class);
+        intent.putExtra("id",id);
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(this,id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        if(start_time.get(Calendar.MINUTE)<remind_items[slect_rem])
+        {
+            start_time.set(Calendar.HOUR,start_time.get(Calendar.HOUR)-1);
+            start_time.set(Calendar.MINUTE,60-(remind_items[slect_rem]-start_time.get(Calendar.MINUTE)));
+        }
+        else
+            start_time.set(Calendar.MINUTE,start_time.get(Calendar.MINUTE)-remind_items[slect_rem]);
+        if(selct_rep==0||selct_rep==2)
+             alarmManager.set(AlarmManager.RTC_WAKEUP,start_time.getTimeInMillis(),pendingIntent);
+        else if(selct_rep==1)
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, start_time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        else
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, start_time.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
 
     }
 

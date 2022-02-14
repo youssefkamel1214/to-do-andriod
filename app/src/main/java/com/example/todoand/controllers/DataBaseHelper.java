@@ -59,7 +59,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             cv.put(Task_start_time,task.getStartTime().getTimeInMillis());
             cv.put(Task_endtime,task.getEndTime().getTimeInMillis());
             long ins = db.insert(Task_table,null,cv);
-            System.out.println(ins);
             db.close();
             return ins;
         }catch (Exception e){
@@ -93,7 +92,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     int color = cursor.getInt(6);
                     int remind = cursor.getInt(7);
                     String repeat = cursor.getString(8);
-                    System.out.println(starttime.getTime());
                     tasks.add(new Task(id, remind, color, title, note, repeat, starttime, endtime, iscompleated));
                 }
                 catch (Exception e)
