@@ -56,7 +56,6 @@ private    DataBaseHelper dataBaseHelper;
                 move_add_task_page();
             }
         });
-        inaizle_imagebutton();
         inalize_datetimeadapter();
         inialize_Databaseandrecycler();
         filterdates_give_adptares();
@@ -64,40 +63,6 @@ private    DataBaseHelper dataBaseHelper;
 
 
 
-    private void inaizle_imagebutton() {
-        imageButton= binding.appbaar.themeButton;
-        Context context=this.getApplicationContext();
-        SharedPreferences sharedPreferences=context.getSharedPreferences("themes",Context.MODE_PRIVATE);
-        isDark=sharedPreferences.getBoolean("theme",false);
-        if(!isDark)
-            imageButton.setImageResource(R.drawable.ic_baseline_dark_mode_24);
-        else
-            imageButton.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isDark^=true;
-                sharedPreferences.edit().putBoolean("theme",isDark);
-                sharedPreferences.edit().apply();
-                if(!isDark) {
-                    imageButton.setImageResource(R.drawable.ic_baseline_dark_mode_24);
-                }
-                else {
-                    imageButton.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                if(isDark)
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-            }
-        });
-
-
-    }
 
     private void filterdates_give_adptares() {
         ArrayList<Task>filterd=new ArrayList<Task>();
