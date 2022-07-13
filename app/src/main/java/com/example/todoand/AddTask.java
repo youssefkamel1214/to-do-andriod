@@ -141,7 +141,7 @@ public class AddTask extends AppCompatActivity {
             a.show();
             return;
         }
-        DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
+        DataBaseHelper dataBaseHelper= DataBaseHelper.getInstance(this);
         try {
             Task task=new Task(0,remind_items[slect_rem],color,tittxt,notetxt,
                     repeat_items[selct_rep],start_time,end_time,0);

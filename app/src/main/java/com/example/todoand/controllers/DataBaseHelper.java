@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
-
+    private   static DataBaseHelper instance;
     public static final String Task_table = "Task_table";
     public static final String Task_title = "title";
     public static final String Task_note = "note";
@@ -27,8 +28,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String Task_iscompleted = "isCompleted";
 
 
-    public DataBaseHelper(@Nullable Context context) {
+    private DataBaseHelper(@Nullable Context context) {
         super(context, "TaskDB", null, 1);
+    }
+    public static DataBaseHelper getInstance(@Nullable Context context){
+        if(instance==null){
+          instance= new DataBaseHelper(context);
+        }
+        return instance;
     }
 
     @Override
@@ -45,9 +52,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     public long addOne(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
-        System.out.println(task.getStartTime().getTime());
-        System.out.println(task.getEndTime().getTime());
-        System.out.println(task.getRepeat());
         ContentValues cv = new ContentValues();
         try {
             cv.put(Task_remind,task.getRemind());

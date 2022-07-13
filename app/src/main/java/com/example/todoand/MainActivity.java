@@ -32,17 +32,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements Datecontroll_interface {
-private ActivityMainBinding binding;
-private  MaterialTimePicker materalTimepicker;
-private PendingIntent pendingIntent;
-private RecyclerView.Adapter datetimadapter;
-private RecyclerView DatetimeR;
-private AlarmManager alarmManager;
-private ImageView imageButton;
-private boolean isDark;
-private Calendar selcted_date=Calendar.getInstance();
-private ArrayList<Task>tasks=new ArrayList<Task>();
-private    DataBaseHelper dataBaseHelper;
+    private ActivityMainBinding binding;
+    private  MaterialTimePicker materalTimepicker;
+    private PendingIntent pendingIntent;
+    private RecyclerView.Adapter datetimadapter;
+    private RecyclerView DatetimeR;
+    private AlarmManager alarmManager;
+    private ImageView imageButton;
+    private boolean isDark;
+    private Calendar selcted_date=Calendar.getInstance();
+    private ArrayList<Task>tasks=new ArrayList<Task>();
+    private    DataBaseHelper dataBaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,13 +88,13 @@ private    DataBaseHelper dataBaseHelper;
             }
             else if(task.getRepeat().equals("Weekly") &&
                     (selcted_date.get(Calendar.DAY_OF_WEEK)==
-                   tmp.get(Calendar.DAY_OF_WEEK)))
+                            tmp.get(Calendar.DAY_OF_WEEK)))
             {
                 filterd.add(task);
             }
             else if(task.getRepeat().equals("Mounthly")&&
                     (selcted_date.get(Calendar.DAY_OF_MONTH)==
-                     tmp.get(Calendar.DAY_OF_MONTH)))
+                            tmp.get(Calendar.DAY_OF_MONTH)))
             {
                 filterd.add(task);
             }
@@ -133,12 +133,12 @@ private    DataBaseHelper dataBaseHelper;
     }
 
     private void inialize_Databaseandrecycler() {
-         try {
-              dataBaseHelper=new DataBaseHelper(this);
+        try {
+            dataBaseHelper=DataBaseHelper.getInstance(this);
             tasks= dataBaseHelper.get_all_tasks();
-         }catch (Exception e){
-             System.out.println(e);
-         }
+        }catch (Exception e){
+            System.out.println(e);
+        }
         Spaceitemdecoration datespace=new Spaceitemdecoration(5,10);
         binding.Taskrecler.addItemDecoration(datespace);
         binding.Taskrecler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -148,16 +148,16 @@ private    DataBaseHelper dataBaseHelper;
     private void inalize_datetimeadapter(){
 
         ArrayList<String>days=new ArrayList<String>();
-       Calendar c= Calendar.getInstance();
-       SimpleDateFormat sdf=new  SimpleDateFormat("EEE dd MMM");
-       binding.today.setText("Today\n"+sdf.format(c.getTime()));
-       for (int i=0;i<31;i++)
-       {
-           days.add(sdf.format(c.getTime()));
-           c.set(Calendar.DAY_OF_MONTH,c.get(Calendar.DAY_OF_MONTH)+1);
-       }
-       Spaceitemdecoration datespace=new Spaceitemdecoration(5,0);
-       binding.datercycler.addItemDecoration(datespace);
+        Calendar c= Calendar.getInstance();
+        SimpleDateFormat sdf=new  SimpleDateFormat("EEE dd MMM");
+        binding.today.setText("Today\n"+sdf.format(c.getTime()));
+        for (int i=0;i<31;i++)
+        {
+            days.add(sdf.format(c.getTime()));
+            c.set(Calendar.DAY_OF_MONTH,c.get(Calendar.DAY_OF_MONTH)+1);
+        }
+        Spaceitemdecoration datespace=new Spaceitemdecoration(5,0);
+        binding.datercycler.addItemDecoration(datespace);
         binding.datercycler.setHasFixedSize(true);
         binding.datercycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         datetimadapter=new recyler_adapter_dattime(days,this);
@@ -169,10 +169,10 @@ private    DataBaseHelper dataBaseHelper;
 
     @Override
     public void onDateselect(int days) {
-              selcted_date=Calendar.getInstance();
-              selcted_date.set(Calendar.DATE,
-                      selcted_date.get(Calendar.DATE)+days);
-              filterdates_give_adptares();
+        selcted_date=Calendar.getInstance();
+        selcted_date.set(Calendar.DATE,
+                selcted_date.get(Calendar.DATE)+days);
+        filterdates_give_adptares();
     }
 
     @Override
@@ -230,6 +230,6 @@ private    DataBaseHelper dataBaseHelper;
             alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
         }
         if(pendingIntent!=null)
-        alarmManager.cancel(pendingIntent);
+            alarmManager.cancel(pendingIntent);
     }
 }

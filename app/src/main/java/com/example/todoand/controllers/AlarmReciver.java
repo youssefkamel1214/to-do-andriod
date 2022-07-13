@@ -22,7 +22,7 @@ public class AlarmReciver extends BroadcastReceiver {
           int id=intent.getIntExtra("id",-1);
           if(id==-1)
               return;
-          DataBaseHelper dataBaseHelper=new DataBaseHelper(context);
+          DataBaseHelper dataBaseHelper= DataBaseHelper.getInstance(context);
         Task task=dataBaseHelper.get_by_id(id);
         Intent i=new Intent(context, Desrption.class);
         i.putExtra("id",id);
@@ -31,7 +31,7 @@ public class AlarmReciver extends BroadcastReceiver {
         PendingIntent pendingIntent=PendingIntent.getActivity(context,id,i,PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder=new NotificationCompat.
                 Builder(context,"todo")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_notifaction)
                 .setContentTitle(task.getTitle())
                 .setContentText(task.getNote())
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

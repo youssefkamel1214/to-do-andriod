@@ -1,5 +1,6 @@
 package com.example.todoand.controllers;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,11 @@ public recyler_adapter_dattime(ArrayList<String> rceyler_items_list,Datecontroll
         this.datecontroll_interface=datecontroll_interface;
         this.rceyler_items_list=rceyler_items_list;
 }
+public void add_random(String s)
+{
+    rceyler_items_list.add(0, s);
+    notifyItemInserted(0);
+}
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,7 +52,7 @@ public recyler_adapter_dattime(ArrayList<String> rceyler_items_list,Datecontroll
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull Viewholder holder, @SuppressLint("RecyclerView") int position) {
       String current=rceyler_items_list.get(position);
       holder.mounthN.setText(current.substring(7,10));
       holder.DayM.setText(current.substring(4,6));

@@ -3,15 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.20989583333333334" />
+        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/drawable/ic_baseline_date_range_24.xml" value="0.20989583333333334" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/drawable/ic_baseline_wb_sunny_24.xml" value="0.3828125" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/drawable/inputdpblack.xml" value="0.3828125" />
+        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout-night/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout-night/appbar.xml" value="0.36666666666666664" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/activity_add_task.xml" value="0.2" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/activity_desrption.xml" value="0.20833333333333334" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/activity_destalarm.xml" value="0.1" />
+        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/activity_main-night.xml" value="0.36666666666666664" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/appbar.xml" value="0.25" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.18" />
-        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/datetimerecle.xml" value="0.1" />
+        <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/datetimerecle.xml" value="0.22" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/list_items.xml" value="0.1" />
         <entry key="..\:/study/android/To Do Andriod/app/src/main/res/layout/taskrecleritem.xml" value="0.33" />
       </map>

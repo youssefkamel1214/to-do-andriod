@@ -45,7 +45,7 @@ private SimpleDateFormat DMY=new SimpleDateFormat("dd-MMM-YYYY"),HM=new SimpleDa
         });
         Intent intent=getIntent();
         int id=intent.getIntExtra("id",-1);
-        DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
+        DataBaseHelper dataBaseHelper= DataBaseHelper.getInstance(this);
        Task task= dataBaseHelper.get_by_id(id);
        if(task!=null&&id!=-1)
        {
