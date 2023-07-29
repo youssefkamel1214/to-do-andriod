@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -20,6 +22,7 @@ public class AlarmReciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
           int id=intent.getIntExtra("id",-1);
+          Log.d("AlarmReciver",Integer.toString(id));
           if(id==-1)
               return;
           DataBaseHelper dataBaseHelper= DataBaseHelper.getInstance(context);
@@ -28,7 +31,13 @@ public class AlarmReciver extends BroadcastReceiver {
         i.putExtra("id",id);
         if(task.getRepeat().equals("Mounthly"))
             create_new_noti_formounthly(context, task);
-        PendingIntent pendingIntent=PendingIntent.getActivity(context,id,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S) {
+            pendingIntent =PendingIntent.getActivity(context,id,i,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_MUTABLE);
+        }
+        else {
+            pendingIntent = PendingIntent.getActivity(context,id,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         NotificationCompat.Builder builder=new NotificationCompat.
                 Builder(context,"todo")
                 .setSmallIcon(R.drawable.ic_notifaction)
@@ -44,7 +53,13 @@ public class AlarmReciver extends BroadcastReceiver {
         AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(context, AlarmReciver.class);
         intent.putExtra("id",task.getId());
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(context,task.getId(),intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S) {
+            pendingIntent =PendingIntent.getBroadcast(context,task.getId(),intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_MUTABLE);
+        }
+        else {
+            pendingIntent =PendingIntent.getBroadcast(context,task.getId(),intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         Calendar tmp=task.getStartTime();
         if(task.getStartTime().get(Calendar.MINUTE)<task.getRemind())
         {

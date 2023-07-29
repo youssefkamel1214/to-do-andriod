@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements Datecontroll_inte
     private Calendar selcted_date=Calendar.getInstance();
     private ArrayList<Task>tasks=new ArrayList<Task>();
     private    DataBaseHelper dataBaseHelper;
+    Task_adapter taskAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,15 @@ public class MainActivity extends AppCompatActivity implements Datecontroll_inte
             @Override
             public void onClick(View view) {
                 move_add_task_page();
+            }
+        });
+        binding.appbaar.imageview.setOnClickListener(v -> {
+            if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
             }
         });
         inalize_datetimeadapter();
@@ -105,10 +117,12 @@ public class MainActivity extends AppCompatActivity implements Datecontroll_inte
         }
         if(filterd.size()>0)
         {
-            Task_adapter taskAdapter=new Task_adapter(filterd,this);
-            binding.Taskrecler.setAdapter(taskAdapter);
+
+//            taskAdapter=new Task_adapter(filterd,this);
             binding.Loading.setVisibility(View.GONE);
             binding.Taskrecler.setVisibility(View.VISIBLE);
+            taskAdapter.sumbitlist(filterd);
+            binding.Taskrecler.startLayoutAnimation();
         }
         else {
             binding.Loading.setText("there no Tasks");
@@ -142,6 +156,8 @@ public class MainActivity extends AppCompatActivity implements Datecontroll_inte
         Spaceitemdecoration datespace=new Spaceitemdecoration(5,10);
         binding.Taskrecler.addItemDecoration(datespace);
         binding.Taskrecler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        taskAdapter=new Task_adapter(new ArrayList<>(),this);
+        binding.Taskrecler.setAdapter(taskAdapter);
 
     }
 
@@ -219,12 +235,19 @@ public class MainActivity extends AppCompatActivity implements Datecontroll_inte
         bottomSheetDialog.show();
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void cancelnotifction(Task task) {
         Intent intent=new Intent(this, AlarmReciver.class);
         intent.putExtra("id",task.getId());
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(this
-                ,task.getId(),intent,PendingIntent.FLAG_NO_CREATE);
-
+        PendingIntent pendingIntent;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S) {
+            pendingIntent = PendingIntent.getBroadcast(this
+                    , task.getId(), intent, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_MUTABLE);
+        }
+        else {
+            pendingIntent = PendingIntent.getBroadcast(this
+                    , task.getId(), intent, PendingIntent.FLAG_NO_CREATE);
+        }
         if(alarmManager==null)
         {
             alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);

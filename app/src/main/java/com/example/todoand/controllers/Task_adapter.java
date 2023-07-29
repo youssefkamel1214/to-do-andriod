@@ -23,6 +23,12 @@ public class Task_adapter extends RecyclerView.Adapter<Task_adapter.Viewholder> 
         this.Task_list=Task_List;
         this.datecontroll_interface=datecontroll_interface;
     }
+
+    public void sumbitlist(ArrayList<Task> filterd) {
+        Task_list=filterd;
+        notifyDataSetChanged();
+    }
+
     public static class  Viewholder extends RecyclerView.ViewHolder{
        public TextView title,note,starttime;
        public CardView cardView;

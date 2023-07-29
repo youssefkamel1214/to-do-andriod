@@ -66,7 +66,7 @@ public void add_random(String s)
           }
       });
       if(position==selct_pos)
-          holder.cardView.setCardBackgroundColor(Color.parseColor("#FF4e5ae8"));
+          holder.cardView.setCardBackgroundColor(holder.cardView.getContext().getColor(R.color.buttoncolor));
       else
           holder.cardView.setCardBackgroundColor(null);
     }

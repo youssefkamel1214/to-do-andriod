@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -47,6 +48,7 @@ public class AddTask extends AppCompatActivity {
     private ImageButton imageButton;
     private  Button create;
     SimpleDateFormat DMY=new SimpleDateFormat("dd-MMM-YYYY"),HM=new SimpleDateFormat("HH: mm");
+    String tag="AddTask";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +104,9 @@ public class AddTask extends AppCompatActivity {
         start_time.set(Calendar.HOUR,end_time.get(Calendar.HOUR)+1);
         end_time.set(Calendar.HOUR,end_time.get(Calendar.HOUR)+1);
         start_time.set(Calendar.SECOND,0);
+        start_time.set(Calendar.MILLISECOND,0);
         end_time.set(Calendar.SECOND,0);
+        end_time.set(Calendar.MILLISECOND,0);
         if(end_time.get(Calendar.MINUTE)>44){
             end_time.set(Calendar.HOUR,end_time.get(Calendar.HOUR)+1);
             end_time.set(Calendar.MINUTE,0);
@@ -129,14 +133,16 @@ public class AddTask extends AppCompatActivity {
           a.show();
             return;
         }
-        Calendar calendar=Calendar.getInstance();
-        if(calendar.after(start_time))
+        Log.d(tag,new SimpleDateFormat("dd:mm:yyyy HH:MM").format(start_time.getTime()));
+        Log.d(tag,new SimpleDateFormat("dd:mm:yyyy HH:MM").format(Calendar.getInstance().getTime()));
+
+        if(Calendar.getInstance().after(start_time))
         {
             Toast a=  Toast.makeText(this,"ast5fr allah al3zem ya 3m anta bt7otly tare5 3da",Toast.LENGTH_LONG);
             a.show();
             return;
         }
-        if(start_time.after(end_time)==true){
+        if(start_time.after(end_time)){
             Toast a=  Toast.makeText(this,"ya Allah y3ny task 5lst 2bl ma tbd2 ",Toast.LENGTH_LONG);
             a.show();
             return;
@@ -159,9 +165,8 @@ public class AddTask extends AppCompatActivity {
            }
         }catch (Exception e){
             System.out.println("error when we create one task");
-            Toast a=  Toast.makeText(this,"cant a7a Data",Toast.LENGTH_LONG);
+            Toast a=  Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG);
             a.show();
-            System.out.println(e);
         }
 
     }
@@ -170,7 +175,13 @@ public class AddTask extends AppCompatActivity {
         AlarmManager alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(this, AlarmReciver.class);
         intent.putExtra("id",id);
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(this,id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S) {
+            pendingIntent =PendingIntent.getBroadcast(this,id,intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_MUTABLE);
+        }
+        else {
+            pendingIntent = PendingIntent.getBroadcast(this,id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         if(start_time.get(Calendar.MINUTE)<remind_items[slect_rem])
         {
             start_time.set(Calendar.HOUR,start_time.get(Calendar.HOUR)-1);

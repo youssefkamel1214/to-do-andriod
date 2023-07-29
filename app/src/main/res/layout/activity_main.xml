@@ -17,6 +17,7 @@
         android:id="@+id/mainactgroup1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:layout_below="@+id/appbaar"
         android:layout_marginTop="15dp">
 
@@ -30,16 +31,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:background="@drawable/inputdpblack"
 
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/addtaskbutton"
+            android:padding="8dp"
+            android:backgroundTint="@color/buttoncolor"
             android:text="+Add Task"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></Button>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
